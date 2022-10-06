@@ -2,12 +2,13 @@
 
 ## TODO
 - Basic engine features
-  - Collision resolution
-  - Sound management (events?)
-  - Map management (import, creation, and export)
-  - mores stuff
+  1. Collision resolution
+  2. Drawable class
+  3. Sound management (events?)
+  4. Map management (import, creation, and export)
+  5. mores stuff
 - Gameplay features
-  - TBD
+  1. TBD
 
 ## Links
 [UML Tree Link](https://lucid.app/lucidchart/a2a08f0b-dfa6-4641-a8cc-3fd7d605779a/edit?viewport_loc=-332%2C-309%2C3678%2C1806%2C0_0&invitationId=inv_33b1dea5-221b-4891-8058-8ce4be728af2#)
