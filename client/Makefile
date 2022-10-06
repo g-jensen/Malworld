@@ -2,7 +2,7 @@ GCC=g++
 EXT=cpp
 SRC=src
 
-SFML_PATH= C:\SFML-2.5.1
+SFML_PATH= C:\downloads\SFML-2.5.1
 SFML_INCLUDE= -I${SFML_PATH}\include
 SFML_LIB= -lsfml-graphics -lsfml-window -lsfml-system
 SFML_LINK= -L${SFML_PATH}\lib ${SFML_LIB}
