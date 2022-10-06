@@ -7,6 +7,6 @@ void Collidable::setup_hitbox(sf::Vector2f position, sf::Vector2f size) {
     hit_box.height = size.y;
 }
 
-bool Collidable::object_are_colliding(Collidable* c1, Collidable* c2) {
-    return c1->hit_box.intersects(c2->hit_box);
+bool Collidable::is_colliding(Collidable* c) {
+    return c->hit_box.intersects(this->hit_box);
 }

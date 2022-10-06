@@ -18,16 +18,16 @@ void Game::init() {
 }
 
 void Game::run() {
-    Player* player = new Player({-200,-150});
 
     sf::Texture texture;
     texture.loadFromFile("zane.png");
 
-    player->sprite.setTexture(texture);
-    player->sprite.setScale(0.16,0.16);
+    Player* player = new Player({-200,-150},{50,50});
+    player->velocity = {1,15};
+    player->init_sprite(texture);
 
-    Object floor({-300,100},{450,50});
-    floor.init_sprite(texture);
+    Object* floor = new Object({-300,100},{450,50});
+    floor->init_sprite(texture);
 
     Time::delta_time.restart();
     while (window->isOpen()) {
@@ -41,16 +41,22 @@ void Game::run() {
 
         player->update();
 
+        player->velocity.y = floor->is_colliding(player) ? 0 : 15;
+
         window->clear(sf::Color::Black);
 
         // window.draw(...);
         window->draw(player->sprite);
-        window->draw(floor.get_sprite());
+        window->draw(floor->get_sprite());
 
         window->display();
+
         Time::cumulative_time += Time::delta_time.getElapsedTime().asSeconds();
         Time::delta_time.restart();
     }
+
+    delete player;
+    delete floor;
 }
 
 void Game::cleanup() {

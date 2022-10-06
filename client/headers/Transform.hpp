@@ -5,7 +5,7 @@
 class Transform {
 public:
     void update_transform();
-protected:
     sf::Vector2f position;
     float rotation;
+protected:
 };

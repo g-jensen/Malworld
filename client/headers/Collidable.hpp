@@ -8,7 +8,7 @@ class Collidable: public Transform {
 public:
     bool do_collision;
     void setup_hitbox(sf::Vector2f position, sf::Vector2f size);
-    bool object_are_colliding(Collidable* c1, Collidable* c2);
+    bool is_colliding(Collidable* c);
 protected:
     sf::FloatRect hit_box;
 };
