@@ -1,0 +1,12 @@
+client/sfml-window-d-2.dll
+client/sfml-window-2.dll
+client/sfml-system-d-2.dll
+client/sfml-system-2.dll
+client/sfml-network-d-2.dll
+client/sfml-graphics-d-2.dll
+client/sfml-graphics-2.dll
+client/sfml-audio-d-2.dll
+client/sfml-audio-2.dll
+client/sfml-network-2.dll
+client/Makefile
+client/main.exe
