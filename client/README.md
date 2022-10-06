@@ -3,10 +3,11 @@
 ## TODO
 - Basic engine features
   1. Collision resolution
-  2. Drawable class
-  3. Sound management (events?)
-  4. Map management (import, creation, and export)
-  5. mores stuff
+  2. ~~Drawable class~~
+  3. System to determine which Drawables are visible and add them to list
+  4. Sound management (events?)
+  5. Map management (import, creation, and export)
+  6. mores stuff
 - Gameplay features
   1. TBD
 
