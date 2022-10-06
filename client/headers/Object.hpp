@@ -12,6 +12,5 @@ public:
     Object(sf::Vector2f position, sf::Vector2f size);
     void init_sprite(sf::Texture& texture);
     sf::Sprite get_sprite();
-private:
-    sf::Sprite sprite;
+    // void draw(sf::RenderWindow* window);
 };

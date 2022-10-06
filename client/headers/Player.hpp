@@ -11,6 +11,6 @@ public:
     Player(sf::Vector2f position, sf::Vector2f size);
     void init_sprite(sf::Texture& texture);
     void update();
-    sf::Sprite sprite;
+    // void draw(sf::RenderWindow* window);
     sf::Vector2f size;
 };

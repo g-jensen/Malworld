@@ -46,8 +46,9 @@ void Game::run() {
         window->clear(sf::Color::Black);
 
         // window.draw(...);
-        window->draw(player->sprite);
-        window->draw(floor->get_sprite());
+        for (Drawable* d: Drawable::drawables) {
+            d->draw(window);
+        }
 
         window->display();
 
