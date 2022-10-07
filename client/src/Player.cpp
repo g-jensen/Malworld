@@ -19,3 +19,12 @@ void Player::update() {
     sprite.setPosition(position);
     setup_hitbox(position,size);
 }
+
+bool Player::is_grounded() {
+    sf::Vector2f origin = position - sf::Vector2f{size.x*0.5,-size.y};
+    sf::Vector2f direction = {0,1};
+    if (Collidable::raycast_collision({origin},{direction},5) < 0) {
+        return false;
+    }
+    return Collidable::raycast_collision({origin},{direction},5) < 5;
+}

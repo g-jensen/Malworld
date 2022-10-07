@@ -11,6 +11,8 @@ public:
     Player(sf::Vector2f position, sf::Vector2f size);
     void init_sprite(sf::Texture& texture);
     void update();
-    // void draw(sf::RenderWindow* window);
+    sf::Vector2f get_size();
+    bool is_grounded();
+private:
     sf::Vector2f size;
 };
