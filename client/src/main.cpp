@@ -10,7 +10,7 @@ int main() {
     
     std::ifstream f("test.json");
     json data = json::parse(f);
-    std::cout << data << std::endl;
+    std::cout << data["move_left"] << std::endl;
 
     Game* game = new Game();
 
