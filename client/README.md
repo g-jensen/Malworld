@@ -9,7 +9,7 @@
   5. System to determine which Drawables are visible and add them to list
   6. Sound management (events?)
   7. Map management (import, creation, and export)
-  8. mores stuff
+  8. Animation system
 - Gameplay features
   1. TBD
 
