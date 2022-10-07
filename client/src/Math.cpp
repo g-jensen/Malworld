@@ -11,3 +11,7 @@ float Math::distance(sf::Vector2f v1, sf::Vector2f v2) {
     float dy = v1.y - v2.y;
     return sqrt((dx*dx) + (dy*dy));
 }
+
+bool Math::approximately_equal_to(float value, float target, float err) {
+    return value > target-err && value < target+err;
+}

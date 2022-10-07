@@ -25,6 +25,11 @@ void Game::run() {
     sf::Texture texture;
     texture.loadFromFile("zane.png");
 
+    // std::vector<Object*> test;
+    // for (int i = 0; i < 10000; i++) {
+    //     test.push_back(new Object({0,0},{450,50}));
+    // }
+
     Player* player = new Player({-200,-150},{50,50});
     player->velocity = {1,0};
     player->init_sprite(texture);
@@ -49,6 +54,14 @@ void Game::run() {
             }
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            player->velocity.x = -5;
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            player->velocity.x = 5;
+        }
+        
         player->update();
 
         for (Collidable* c : Collidable::collidables) {
@@ -56,17 +69,7 @@ void Game::run() {
                 player->on_intersect(c);
             }
         }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            player->velocity.x = -5;
-            player->acceleration.x = 0.1;
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            player->velocity.x = 5;
-            player->acceleration.x = -0.1;
-        }
-
+        
         window->clear(sf::Color::Black);
 
         // window->draw(...);
@@ -86,6 +89,9 @@ void Game::run() {
 
     delete player;
     delete floor;
+    // for (auto g: test) {
+    //     delete g;
+    // }
 }
 
 void Game::cleanup() {

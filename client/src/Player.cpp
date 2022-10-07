@@ -28,6 +28,17 @@ void Player::update() {
     sprite.setPosition(position);
     setup_hitbox(position,size);
 
+    // handle horizontal movement
+    if (Math::approximately_equal_to(velocity.x,0,4)) {
+        velocity.x = 0;
+        acceleration.x = 0;
+    } else if (velocity.x < 0) {
+        acceleration.x = 0.5;
+    } else if (velocity.x > 0) {
+        acceleration.x = -0.5;
+    }
+
+    // handle vertical movement;
     if (is_grounded()) {
         velocity.y = 0;
         acceleration.y = 0;
