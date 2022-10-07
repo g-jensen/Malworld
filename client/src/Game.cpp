@@ -1,7 +1,9 @@
 #include "../headers/Game.hpp"
 
 #include <iostream>
+
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 Game::Game() {
     window = nullptr;
@@ -29,6 +31,13 @@ void Game::run() {
 
     Object* floor = new Object({-300,100},{450,50});
     floor->init_sprite(texture);
+
+    sf::Font font;
+    font.loadFromFile("Ubuntu-Regular.ttf");
+    sf::Text fps_display;
+    fps_display.setFont(font);
+    fps_display.setPosition({300,-200});
+    int fps = 0;
 
     Time::delta_time.restart();
     while (window->isOpen()) {
@@ -60,12 +69,16 @@ void Game::run() {
 
         window->clear(sf::Color::Black);
 
-        // window.draw(...);
+        // window->draw(...);
         for (Drawable* d: Drawable::drawables) {
             d->draw(window);
         }
+        window->draw(fps_display);
 
         window->display();
+
+        fps = 1 / Time::delta_time.getElapsedTime().asSeconds();
+        fps_display.setString(std::to_string(fps));
 
         Time::cumulative_time += Time::delta_time.getElapsedTime().asSeconds();
         Time::delta_time.restart();
