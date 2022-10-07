@@ -3,7 +3,7 @@
 ## TODO
 - Basic engine features
   1. Collision resolution
-  2. ~~~Raycasts~~~
+  2. ~~Raycasts~~
   3. Grid system to make raycasts more efficient
   4. ~~Drawable class~~
   5. System to determine which Drawables are visible and add them to list
