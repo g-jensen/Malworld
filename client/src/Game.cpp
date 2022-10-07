@@ -48,6 +48,16 @@ void Game::run() {
             }
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            player->velocity.x = -5;
+            player->acceleration.x = 0.1;
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            player->velocity.x = 5;
+            player->acceleration.x = -0.1;
+        }
+
         window->clear(sf::Color::Black);
 
         // window.draw(...);
