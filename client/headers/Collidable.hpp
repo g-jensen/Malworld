@@ -15,8 +15,8 @@ public:
     bool do_collision;
     void setup_hitbox(sf::Vector2f position, sf::Vector2f size);
     bool is_colliding(Collidable* c);
-protected:
     sf::FloatRect hit_box;
+protected:
 private:
     // returns pointer to the Collidable or nullptr if nothing
     static Collidable* point_is_colliding(sf::Vector2f p);

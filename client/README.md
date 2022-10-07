@@ -3,7 +3,7 @@
 ## TODO
 - Basic engine features
   1. Collision resolution
-  2. Raycasts
+  2. ~~~Raycasts~~~
   3. Grid system to make raycasts more efficient
   4. ~~Drawable class~~
   5. System to determine which Drawables are visible and add them to list
@@ -15,6 +15,8 @@
 
 ## Links
 [UML Tree Link](https://lucid.app/lucidchart/a2a08f0b-dfa6-4641-a8cc-3fd7d605779a/edit?viewport_loc=-332%2C-309%2C3678%2C1806%2C0_0&invitationId=inv_33b1dea5-221b-4891-8058-8ce4be728af2#)
+
+[Taiga Link](https://tree.taiga.io/project/lackability-malworld-1/kanban)
 
 ## Merging Guidelines
 - Create new branch with your edit and make a pull request

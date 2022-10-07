@@ -1,6 +1,7 @@
 #include "../headers/Game.hpp"
 
 #include <iostream>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 Game::Game() {
     window = nullptr;
@@ -23,7 +24,7 @@ void Game::run() {
     texture.loadFromFile("zane.png");
 
     Player* player = new Player({-200,-150},{50,50});
-    player->velocity = {1,15};
+    player->velocity = {1,0};
     player->init_sprite(texture);
 
     Object* floor = new Object({-300,100},{450,50});
@@ -41,7 +42,11 @@ void Game::run() {
 
         player->update();
 
-        player->velocity.y = floor->is_colliding(player) ? 0 : 15;
+        for (Collidable* c : Collidable::collidables) {
+            if (c != player && player->hit_box.intersects(c->hit_box)) {
+                player->on_intersect(c);
+            }
+        }
 
         window->clear(sf::Color::Black);
 

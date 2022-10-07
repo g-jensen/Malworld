@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
@@ -13,6 +15,7 @@ public:
     void update();
     sf::Vector2f get_size();
     bool is_grounded();
+    void on_intersect(Collidable* c);
 private:
     sf::Vector2f size;
 };
