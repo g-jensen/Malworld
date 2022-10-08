@@ -1,10 +1,5 @@
 #include "../headers/Game.hpp"
 
-#include <iostream>
-
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/Text.hpp>
-
 Game::Game() {
     window = nullptr;
 }
@@ -23,7 +18,7 @@ void Game::init() {
 void Game::run() {
 
     sf::Texture texture;
-    texture.loadFromFile("zane.png");
+    texture.loadFromFile("resources/zane.png");
 
     // std::vector<Object*> test;
     // for (int i = 0; i < 10000; i++) {
@@ -38,11 +33,17 @@ void Game::run() {
     floor->init_sprite(texture);
 
     sf::Font font;
-    font.loadFromFile("Ubuntu-Regular.ttf");
+    font.loadFromFile("resources/Ubuntu-Regular.ttf");
     sf::Text fps_display;
     fps_display.setFont(font);
     fps_display.setPosition({300,-200});
     int fps = 0;
+
+    // Load keybinds
+    std::ifstream f("config/keybinds.json");
+    json data = json::parse(f);
+    Keybinds::load_keybinds(data);
+    
 
     Time::delta_time.restart();
     while (window->isOpen()) {
@@ -54,11 +55,10 @@ void Game::run() {
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        if (sf::Keyboard::isKeyPressed(Keybinds::move_left)){
             player->velocity.x = -5;
         }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        if (sf::Keyboard::isKeyPressed(Keybinds::move_right)) {
             player->velocity.x = 5;
         }
         
