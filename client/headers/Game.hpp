@@ -9,6 +9,8 @@
 #include "Player.hpp"
 #include "Time.hpp"
 #include "Object.hpp"
+#include "Keybinds.hpp"
+#include <fstream>
 
 class Game {
 public:

@@ -44,6 +44,12 @@ void Game::run() {
     fps_display.setPosition({300,-200});
     int fps = 0;
 
+    // test keybinds
+    std::ifstream f("test.json");
+    json data = json::parse(f);
+    Keybinds::load_keybinds(data);
+    
+
     Time::delta_time.restart();
     while (window->isOpen()) {
         window->setFramerateLimit(max_framerate);
@@ -54,11 +60,10 @@ void Game::run() {
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        if (sf::Keyboard::isKeyPressed(Keybinds::move_left)){
             player->velocity.x = -5;
         }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        if (sf::Keyboard::isKeyPressed(Keybinds::move_right)) {
             player->velocity.x = 5;
         }
         

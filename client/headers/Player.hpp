@@ -2,11 +2,14 @@
 
 #include <iostream>
 
+#include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 #include "Entity.hpp"
 #include "Math.hpp"
+#include "Keybinds.hpp"
+
 
 class Player: public Entity {
 public:
