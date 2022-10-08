@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>

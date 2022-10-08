@@ -1,6 +1,3 @@
-#include <iostream>
-#include <fstream>
-
 #include "../headers/Game.hpp"
 
 #include "../../nlohmann-json/single_include/nlohmann/json.hpp"

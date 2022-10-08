@@ -1,5 +1,5 @@
 {
     "move_left": "A",
     "move_right": "D",
-    "test": "Space"
+    "jump": "Space"
 }
