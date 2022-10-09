@@ -29,8 +29,14 @@ void Game::run() {
     player->velocity = {1,0};
     player->init_sprite(texture);
 
-    Object* floor = new Object({-300,100},{450,50});
+    Object* floor = new Object({-400,100},{800,50});
     floor->init_sprite(texture);
+
+    Object* floor2 = new Object({-50,0},{450,50});
+    floor2->init_sprite(texture);
+
+    Object* floor3 = new Object({-300,-100},{450,50});
+    floor3->init_sprite(texture);
 
     sf::Font font;
     font.loadFromFile("resources/Ubuntu-Regular.ttf");
@@ -64,6 +70,9 @@ void Game::run() {
         if (sf::Keyboard::isKeyPressed(Keybinds::move_right)) {
             player->velocity.x = 5;
         }
+        if (sf::Keyboard::isKeyPressed(Keybinds::jump)) {
+            player->velocity.y = -10;
+        }
         
         player->update();
 
@@ -73,6 +82,8 @@ void Game::run() {
             }
         }
         
+        //std::cout << player->position.y << std::endl;
+
         window->clear(sf::Color::Black);
 
         // window->draw(...);
@@ -92,6 +103,8 @@ void Game::run() {
 
     delete player;
     delete floor;
+    delete floor2;
+    delete floor3;
     // for (auto g: test) {
     //     delete g;
     // }

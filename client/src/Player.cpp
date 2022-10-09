@@ -5,6 +5,7 @@ Player::Player(sf::Vector2f position, sf::Vector2f size) {
     this->position = position;
     this->do_collision = true;
     this->size = size;
+    this->grounded = false;
     setup_hitbox(position,size);
 }
 
@@ -21,6 +22,7 @@ float Player::distance_from_ground() {
             hit_box.left+hit_box.width < c->hit_box.left ||
             c->hit_box.left+c->hit_box.width < hit_box.left
         ) {continue;}
+        grounded = false;
         
         float dist = c->hit_box.top - (hit_box.top+hit_box.height);
         if (dist >= 0) {
@@ -34,11 +36,29 @@ float Player::distance_from_ground() {
     return smallest_distance;
 }
 
-void Player::update() {
-    update_transform();
-    sprite.setPosition(position);
-    setup_hitbox(position,size);
+bool Player::is_grounded() {
+    return grounded;
+}
 
+void Player::update() {
+    
+    // handle vertical collision;
+    float dist = distance_from_ground();
+    if (dist >= 0) {
+        if (Math::approximately_equal_to(dist,0,velocity.y+1)) {
+            acceleration.y = 0;
+            velocity.y = 0;
+            position.y += dist;
+            grounded = true;
+        } else {
+            acceleration.y = 0.5;
+        }
+    } else {
+        acceleration.y = 0;
+        velocity.y = 0;
+        grounded = true;
+    }
+    
     // handle horizontal movement
     if (Math::approximately_equal_to(velocity.x,0,4)) {
         velocity.x = 0;
@@ -49,20 +69,9 @@ void Player::update() {
         acceleration.x = -0.5;
     }
 
-    // handle vertical collision;
-    float dist = distance_from_ground();
-    if (dist >= 0) {
-        if (Math::approximately_equal_to(dist,0,velocity.y)) {
-            acceleration.y = 0;
-            velocity.y = 0;
-            position.y += dist;
-        } else {
-            acceleration.y = 0.5;
-        }
-    } else {
-        acceleration.y = 0;
-        velocity.y = 0;
-    }
+    update_transform();
+    sprite.setPosition(position);
+    setup_hitbox(position,size);
 }
 
 void Player::on_intersect(Collidable* c) {

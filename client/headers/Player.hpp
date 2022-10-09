@@ -21,5 +21,6 @@ public:
     bool is_grounded();
     void on_intersect(Collidable* c);
 private:
+    bool grounded;
     sf::Vector2f size;
 };
