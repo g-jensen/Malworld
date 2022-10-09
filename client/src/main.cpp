@@ -14,7 +14,7 @@ int main() {
     game->cleanup();
 
     delete game;
-
+    
     std::cout << "Successful Exit" << std::endl;
 
     return 0;

@@ -19,15 +19,20 @@ void Game::run() {
 
     sf::Texture texture;
     texture.loadFromFile("resources/zane.png");
+    sf::Texture texture1;
+    texture1.loadFromFile("resources/testsheet.png");
 
     // std::vector<Object*> test;
     // for (int i = 0; i < 10000; i++) {
     //     test.push_back(new Object({0,0},{450,50}));
     // }
-
+    Object* testplayer = new Object({-200,0},{450,100});
+    testplayer->init_sprite(texture1);
+    
     Player* player = new Player({-200,-150},{50,50});
     player->velocity = {1,0};
     player->init_sprite(texture);
+
 
     Object* floor = new Object({-300,100},{450,50});
     floor->init_sprite(texture);
