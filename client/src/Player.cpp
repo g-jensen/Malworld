@@ -36,6 +36,26 @@ float Player::distance_from_ground() {
     return smallest_distance;
 }
 
+float Player::distance_from_wall() {
+    float smallest_distance = -1;
+    for (Collidable* c : Collidable::collidables) {
+        float player_x = velocity.x > 0 ? hit_box.left+hit_box.width : hit_box.left;
+        float wall_x = velocity.x > 0 ? c->hit_box.left: c->hit_box.left+c->hit_box.width;
+        if (this == c ||
+            hit_box.top+hit_box.height <= c->hit_box.top ||
+            c->hit_box.top+c->hit_box.height <= hit_box.top
+        ) {continue;}
+        
+        float dist = abs(wall_x - (player_x));
+        if (smallest_distance < 0) {
+            smallest_distance = dist;
+        } else if (dist < smallest_distance) {
+            smallest_distance = dist;
+        }
+    }
+    return smallest_distance;
+}
+
 bool Player::is_grounded() {
     return grounded;
 }
@@ -43,12 +63,12 @@ bool Player::is_grounded() {
 void Player::update() {
     
     // handle vertical collision;
-    float dist = distance_from_ground();
-    if (dist >= 0) {
-        if (Math::approximately_equal_to(dist,0,velocity.y+1)) {
+    float ground_dist = distance_from_ground();
+    if (ground_dist >= 0) {
+        if (Math::approximately_equal_to(ground_dist,0,velocity.y+1)) {
             acceleration.y = 0;
             velocity.y = 0;
-            position.y += dist;
+            position.y += ground_dist;
             grounded = true;
         } else {
             acceleration.y = 0.5;
@@ -67,6 +87,18 @@ void Player::update() {
         acceleration.x = 0.5;
     } else if (velocity.x > 0) {
         acceleration.x = -0.5;
+    }
+
+    // handle horizontal collision
+    float wall_dist = distance_from_wall();
+    if (wall_dist != -1 && Math::approximately_equal_to(wall_dist,0,abs(velocity.x))) {
+        acceleration.x = 0;
+        if (velocity.x > 0) {
+            position.x += wall_dist;
+        } else {
+            position.x -= wall_dist;
+        }
+        velocity.x = 0; 
     }
 
     update_transform();

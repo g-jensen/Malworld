@@ -32,7 +32,7 @@ void Game::run() {
     Object* floor = new Object({-400,100},{800,50});
     floor->init_sprite(texture);
 
-    Object* floor2 = new Object({-50,0},{450,50});
+    Object* floor2 = new Object({-600,50},{450,50});
     floor2->init_sprite(texture);
 
     Object* floor3 = new Object({-300,-100},{450,50});
@@ -42,7 +42,7 @@ void Game::run() {
     font.loadFromFile("resources/Ubuntu-Regular.ttf");
     sf::Text fps_display;
     fps_display.setFont(font);
-    fps_display.setPosition({300,-200});
+    fps_display.setPosition({250,-200});
     int fps = 0;
 
     // Load keybinds
@@ -74,16 +74,14 @@ void Game::run() {
             player->velocity.y = -10;
         }
         
-        player->update();
-
         for (Collidable* c : Collidable::collidables) {
             if (c != player && player->hit_box.intersects(c->hit_box)) {
                 player->on_intersect(c);
             }
         }
-        
-        //std::cout << player->position.y << std::endl;
 
+        player->update();
+        
         window->clear(sf::Color::Black);
 
         // window->draw(...);
@@ -95,7 +93,7 @@ void Game::run() {
         window->display();
 
         fps = 1 / Time::delta_time.getElapsedTime().asSeconds();
-        fps_display.setString(std::to_string(fps));
+        fps_display.setString("FPS: " + std::to_string(fps));
 
         Time::cumulative_time += Time::delta_time.getElapsedTime().asSeconds();
         Time::delta_time.restart();
