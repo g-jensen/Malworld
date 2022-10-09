@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -15,6 +17,7 @@ public:
     void init_sprite(sf::Texture& texture);
     void update();
     sf::Vector2f get_size();
+    float distance_from_ground();
     bool is_grounded();
     void on_intersect(Collidable* c);
 private:

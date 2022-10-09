@@ -53,6 +53,9 @@ void Game::run() {
             if (event.type == sf::Event::Closed) {
                 window->close();
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+                player->position.y -= 100;
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(Keybinds::move_left)){

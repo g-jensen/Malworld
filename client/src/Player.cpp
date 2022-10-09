@@ -14,13 +14,24 @@ void Player::init_sprite(sf::Texture& texture) {
     sprite.setScale({size.x / texture.getSize().x , size.y / texture.getSize().y});
 }
 
-bool Player::is_grounded() {
-    sf::Vector2f origin = position + sf::Vector2f{size.x,size.y};
-    sf::Vector2f direction = {0,1};
-    if (Collidable::raycast_collision({origin},{direction},5) < 0 && Collidable::raycast_collision({origin - sf::Vector2f{size.x,0}},{direction},5) < 0) {
-        return false;
+float Player::distance_from_ground() {
+    float smallest_distance = -1;
+    for (Collidable* c : Collidable::collidables) {
+        if (this == c ||
+            hit_box.left+hit_box.width < c->hit_box.left ||
+            c->hit_box.left+c->hit_box.width < hit_box.left
+        ) {continue;}
+        
+        float dist = c->hit_box.top - (hit_box.top+hit_box.height);
+        if (dist >= 0) {
+            if (smallest_distance < 0) {
+                smallest_distance = dist;
+            } else if (dist < smallest_distance) {
+                smallest_distance = dist;
+            }
+        }
     }
-    return Collidable::raycast_collision({origin},{direction},5) < 1 || Collidable::raycast_collision({origin - sf::Vector2f{size.x,0}},{direction},5) < 1;
+    return smallest_distance;
 }
 
 void Player::update() {
@@ -38,18 +49,22 @@ void Player::update() {
         acceleration.x = -0.5;
     }
 
-    // handle vertical movement;
-    if (is_grounded()) {
-        velocity.y = 0;
-        acceleration.y = 0;
+    // handle vertical collision;
+    float dist = distance_from_ground();
+    if (dist >= 0) {
+        if (Math::approximately_equal_to(dist,0,velocity.y)) {
+            acceleration.y = 0;
+            velocity.y = 0;
+            position.y += dist;
+        } else {
+            acceleration.y = 0.5;
+        }
     } else {
-        acceleration.y = 2;
+        acceleration.y = 0;
+        velocity.y = 0;
     }
 }
 
 void Player::on_intersect(Collidable* c) {
-    float y_indent = this->hit_box.top+hit_box.height - c->hit_box.top;
-    if (y_indent > 0) {
-        position.y -= y_indent;
-    }
+    
 }
