@@ -29,14 +29,20 @@ void Game::run() {
     player->velocity = {1,0};
     player->init_sprite(texture);
 
-    Object* floor = new Object({-300,100},{450,50});
+    Object* floor = new Object({-400,100},{800,50});
     floor->init_sprite(texture);
+
+    Object* floor2 = new Object({-600,50},{450,50});
+    floor2->init_sprite(texture);
+
+    Object* floor3 = new Object({-300,-100},{450,50});
+    floor3->init_sprite(texture);
 
     sf::Font font;
     font.loadFromFile("resources/Ubuntu-Regular.ttf");
     sf::Text fps_display;
     fps_display.setFont(font);
-    fps_display.setPosition({300,-200});
+    fps_display.setPosition({250,-200});
     int fps = 0;
 
     // Load keybinds
@@ -53,6 +59,9 @@ void Game::run() {
             if (event.type == sf::Event::Closed) {
                 window->close();
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+                player->position.y -= 100;
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(Keybinds::move_left)){
@@ -61,14 +70,17 @@ void Game::run() {
         if (sf::Keyboard::isKeyPressed(Keybinds::move_right)) {
             player->velocity.x = 5;
         }
+        if (sf::Keyboard::isKeyPressed(Keybinds::jump)) {
+            player->velocity.y = -10;
+        }
         
-        player->update();
-
         for (Collidable* c : Collidable::collidables) {
             if (c != player && player->hit_box.intersects(c->hit_box)) {
                 player->on_intersect(c);
             }
         }
+
+        player->update();
         
         window->clear(sf::Color::Black);
 
@@ -81,7 +93,7 @@ void Game::run() {
         window->display();
 
         fps = 1 / Time::delta_time.getElapsedTime().asSeconds();
-        fps_display.setString(std::to_string(fps));
+        fps_display.setString("FPS: " + std::to_string(fps));
 
         Time::cumulative_time += Time::delta_time.getElapsedTime().asSeconds();
         Time::delta_time.restart();
@@ -89,6 +101,8 @@ void Game::run() {
 
     delete player;
     delete floor;
+    delete floor2;
+    delete floor3;
     // for (auto g: test) {
     //     delete g;
     // }

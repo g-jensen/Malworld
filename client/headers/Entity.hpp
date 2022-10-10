@@ -4,8 +4,7 @@
 
 #include "Collidable.hpp"
 #include "Math.hpp"
-
-#define MAX_ENT_SPEED 128
+#include "Globals.hpp"
 
 class Entity: public Collidable {
 public:

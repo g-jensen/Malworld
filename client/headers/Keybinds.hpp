@@ -15,4 +15,5 @@ public:
 
     static sf::Keyboard::Key move_left;
     static sf::Keyboard::Key move_right;
+    static sf::Keyboard::Key jump;
 };

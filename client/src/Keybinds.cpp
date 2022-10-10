@@ -64,17 +64,21 @@ const std::unordered_map<std::string, sf::Keyboard::Key> Keybinds::string_to_key
 
 void Keybinds::load_keybinds(json data){
     auto key = Keybinds::string_to_key.find(data["move_left"]);
-
     if (key != Keybinds::string_to_key.end()) {
         Keybinds::move_left = key->second;
     }
 
     key = Keybinds::string_to_key.find(data["move_right"]);
-
     if (key != Keybinds::string_to_key.end()) {
         Keybinds::move_right = key->second;
+    }
+
+    key = Keybinds::string_to_key.find(data["jump"]);
+    if (key != Keybinds::string_to_key.end()) {
+        Keybinds::jump = key->second;
     }
 }
 
 sf::Keyboard::Key Keybinds::move_left = sf::Keyboard::A;
 sf::Keyboard::Key Keybinds::move_right = sf::Keyboard::D;
+sf::Keyboard::Key Keybinds::jump = sf::Keyboard::Space;
