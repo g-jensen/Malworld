@@ -28,7 +28,8 @@ private:
     sf::Texture texture;
     bool m_is_playing;
     size_t frame_index;
-    size_t sprite_size;
+    size_t iteration_count;
+    int sprite_size;
     size_t animation_length;
     std::vector<sf::Sprite*> sprite_vector;
 };

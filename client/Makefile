@@ -7,14 +7,19 @@ SFML_INCLUDE= -I${SFML_PATH}\include
 SFML_LIB= -lsfml-graphics -lsfml-window -lsfml-system
 SFML_LINK= -L${SFML_PATH}\lib ${SFML_LIB}
 
-all: compile clean
+all: link clean
 
 compile:
 ifeq (${OS},Windows_NT)
 	${GCC} -c ${SFML_INCLUDE} ${SRC}/*.${EXT}
-	${GCC} *.o -o main ${SFML_LINK}
 else
 	${GCC} -c ${SRC}/*.${EXT}
+endif
+
+link: compile
+ifeq (${OS},Windows_NT)
+	${GCC} *.o -o main ${SFML_LINK}
+else
 	${GCC} *.o -o main ${SFML_LIB}
 endif
 

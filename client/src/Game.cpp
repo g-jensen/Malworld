@@ -24,14 +24,19 @@ void Game::run() {
     //     test.push_back(new Object({0,0},{450,50}));
     // }
     
-    Player* player = new Player({-200,-150},{50,50});
-    player->velocity = {1,0};
-    player->init_sprite(texture);
+    Player* player = new Player({-200,-200},{35,64});
 
-    Animation a(player,64);
-    a.load_from_file("resources/testsheet.png");
-    a.play(16);
-    a.do_repeat = true;
+    Animation walk_left = Animation(player,64);
+    walk_left.load_from_file("resources/walk_left.png");
+    walk_left.do_repeat = true;
+
+    Animation walk_right = Animation(player,64);
+    walk_right.load_from_file("resources/walk_right.png");
+    walk_right.do_repeat = true;
+
+    sf::Texture idle_texture;
+    idle_texture.loadFromFile("resources/idle.png");
+    sf::Sprite idle = sf::Sprite(idle_texture);
 
     Object* floor = new Object({-300,100},{450,50});
     floor->init_sprite(texture);
@@ -41,6 +46,9 @@ void Game::run() {
 
     Object* floor3 = new Object({-300,-100},{450,50});
     floor3->init_sprite(texture);
+
+    Object* floor4 = new Object({130,50},{450,50});
+    floor4->init_sprite(texture);
 
     sf::Font font;
     font.loadFromFile("resources/Ubuntu-Regular.ttf");
@@ -74,8 +82,8 @@ void Game::run() {
         if (sf::Keyboard::isKeyPressed(Keybinds::move_right)) {
             player->velocity.x = 5;
         }
-        if (sf::Keyboard::isKeyPressed(Keybinds::jump)) {
-            player->velocity.y = -10;
+        if (sf::Keyboard::isKeyPressed(Keybinds::jump) && player->is_grounded()) {
+            player->velocity.y = -7.5;
         }
         
         for (Collidable* c : Collidable::collidables) {
@@ -85,7 +93,23 @@ void Game::run() {
         }
 
         player->update();
-        a.iterate();
+
+        if (player->velocity.x > 0 && !walk_right.is_playing()) {
+            walk_left.stop();
+            walk_right.play(32);
+        }
+        if (player->velocity.x < 0 && !walk_left.is_playing()) {
+            walk_right.stop();
+            walk_left.play(32);
+        }
+        if (Math::approximately_equal_to(player->velocity.x,0,1)) {
+            walk_left.stop();
+            walk_right.stop();
+            player->set_sprite(idle);
+        }
+
+        walk_left.iterate();
+        walk_right.iterate();
 
         window->clear(sf::Color::Black);
 
@@ -108,6 +132,7 @@ void Game::run() {
     delete floor;
     delete floor2;
     delete floor3;
+    delete floor4;
     // for (auto g: test) {
     //     delete g;
     // }

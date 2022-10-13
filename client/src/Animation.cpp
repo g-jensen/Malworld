@@ -32,7 +32,7 @@ bool Animation::load_from_file(std::string path){
             sf::Sprite* s = new sf::Sprite();
             s->setTexture(texture);
             s->setTextureRect({{k*sprite_size,i*sprite_size},{sprite_size,sprite_size}});
-            s->setPosition({k*sprite_size,i*sprite_size});
+            s->setPosition({(float)(k*sprite_size),(float)(i*sprite_size)});
             sprite_vector.push_back(s);
         }
     }
@@ -43,13 +43,19 @@ bool Animation::is_playing() {
 }
 
 void Animation::iterate() {
+    iteration_count++;
     if (!m_is_playing) {return;}
-    if (frame_index <= animation_length) {
+    if (do_repeat) {
         frame_index++;
-        update();
-    } else if (do_repeat) {
-        frame_index = 0;
-        update();
+        frame_index %= sprite_vector.size();
+    }
+    if (frame_index <= sprite_vector.size()) {
+        if (iteration_count % (int)(animation_length / sprite_vector.size()) == 0) {
+            frame_index++;
+            update();
+        }
+    } else {
+        stop();
     }
 }
 
