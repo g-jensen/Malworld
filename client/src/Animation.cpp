@@ -2,6 +2,10 @@
 
 std::vector<Animation*> Animation::animations;
 
+Animation::Animation() {
+    ;
+}
+
 Animation::Animation(Drawable* drawable, size_t sprite_size) {
     this->drawable = drawable;
     this->sprite_size = sprite_size;

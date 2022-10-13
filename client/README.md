@@ -5,10 +5,9 @@
   1. System to determine which Drawables are visible and add them to list
   2. Sound management (events?)
   3. Map management (import, creation, and export)
-  4. Animation system
-  5. UI Engine
+  4. UI Engine
 - Gameplay features
-  1. TBD
+  1. NPC Dialogue
 
 ## Links
 [UML Tree Link](https://lucid.app/lucidchart/a2a08f0b-dfa6-4641-a8cc-3fd7d605779a/edit?viewport_loc=-332%2C-309%2C3678%2C1806%2C0_0&invitationId=inv_33b1dea5-221b-4891-8058-8ce4be728af2#)

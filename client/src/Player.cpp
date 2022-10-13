@@ -7,12 +7,38 @@ Player::Player(sf::Vector2f position, sf::Vector2f size) {
     this->size = size;
     this->grounded = false;
     setup_hitbox(position,size);
+    load_animations();
 }
 
-void Player::init_sprite(sf::Texture& texture) {
-    sprite.setTexture(texture);
-    sprite.setPosition(position);
-    sprite.setScale({size.x / texture.getSize().x , size.y / texture.getSize().y});
+void Player::load_animations() {
+    walk_left = Animation(this,64);
+    walk_left.load_from_file("resources/walk_left.png");
+    walk_left.do_repeat = true;
+
+    walk_right = Animation(this,64);
+    walk_right.load_from_file("resources/walk_right.png");
+    walk_right.do_repeat = true;
+
+    idle = Animation(this,64);
+    idle.load_from_file("resources/idle.png");
+}
+
+void Player::update_animations() {
+    walk_left.iterate();
+    walk_right.iterate();
+    if (velocity.x > 0 && !walk_right.is_playing()) {
+        walk_left.stop();
+        walk_right.play(32);
+    }
+    if (velocity.x < 0 && !walk_left.is_playing()) {
+        walk_right.stop();
+        walk_left.play(32);
+    }
+    if (Math::approximately_equal_to(velocity.x,0,1)) {
+        walk_left.stop();
+        walk_right.stop();
+        idle.play(1);
+    }
 }
 
 float Player::distance_from_ground() {
@@ -104,6 +130,9 @@ void Player::update() {
     update_transform();
     sprite.setPosition(position);
     setup_hitbox(position,size);
+
+    // handle animations
+    update_animations();
 }
 
 void Player::on_intersect(Collidable* c) {

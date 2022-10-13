@@ -12,6 +12,7 @@
 
 class Animation {
 public:
+    Animation();
     Animation(Drawable* drawable, size_t sprite_size);
     void play(size_t animation_length);
     void stop();

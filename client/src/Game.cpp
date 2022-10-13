@@ -26,18 +26,6 @@ void Game::run() {
     
     Player* player = new Player({-200,-200},{35,50});
 
-    Animation walk_left = Animation(player,64);
-    walk_left.load_from_file("resources/walk_left.png");
-    walk_left.do_repeat = true;
-
-    Animation walk_right = Animation(player,64);
-    walk_right.load_from_file("resources/walk_right.png");
-    walk_right.do_repeat = true;
-
-    sf::Texture idle_texture;
-    idle_texture.loadFromFile("resources/idle.png");
-    sf::Sprite idle = sf::Sprite(idle_texture);
-
     Object* floor = new Object({-300,100},{450,50});
     floor->init_sprite(texture);
 
@@ -60,8 +48,7 @@ void Game::run() {
     // Load keybinds
     std::ifstream f("config/keybinds.json");
     json data = json::parse(f);
-    Keybinds::load_keybinds(data);
-    
+    Keybinds::load_keybinds(data); 
 
     Time::delta_time.restart();
     while (window->isOpen()) {
@@ -93,23 +80,6 @@ void Game::run() {
         }
 
         player->update();
-
-        if (player->velocity.x > 0 && !walk_right.is_playing()) {
-            walk_left.stop();
-            walk_right.play(32);
-        }
-        if (player->velocity.x < 0 && !walk_left.is_playing()) {
-            walk_right.stop();
-            walk_left.play(32);
-        }
-        if (Math::approximately_equal_to(player->velocity.x,0,1)) {
-            walk_left.stop();
-            walk_right.stop();
-            player->set_sprite(idle);
-        }
-
-        walk_left.iterate();
-        walk_right.iterate();
 
         window->clear(sf::Color::Black);
 

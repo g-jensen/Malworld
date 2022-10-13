@@ -7,7 +7,7 @@ SFML_INCLUDE= -I${SFML_PATH}\include
 SFML_LIB= -lsfml-graphics -lsfml-window -lsfml-system
 SFML_LINK= -L${SFML_PATH}\lib ${SFML_LIB}
 
-all: link clean
+all: link
 
 compile:
 ifeq (${OS},Windows_NT)

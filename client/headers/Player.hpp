@@ -9,12 +9,13 @@
 #include "Entity.hpp"
 #include "Math.hpp"
 #include "Keybinds.hpp"
-
+#include "Animation.hpp"
 
 class Player: public Entity {
 public:
     Player(sf::Vector2f position, sf::Vector2f size);
-    void init_sprite(sf::Texture& texture);
+    void load_animations();
+    void update_animations();
     void update();
     sf::Vector2f get_size();
 
@@ -30,6 +31,9 @@ public:
     void on_intersect(Collidable* c);
 
 private:
+    Animation walk_left;
+    Animation walk_right;
+    Animation idle;
     bool grounded;
     sf::Vector2f size;
 };
