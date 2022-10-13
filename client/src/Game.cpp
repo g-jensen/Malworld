@@ -24,7 +24,7 @@ void Game::run() {
     //     test.push_back(new Object({0,0},{450,50}));
     // }
     
-    Player* player = new Player({-200,-200},{35,64});
+    Player* player = new Player({-200,-200},{35,50});
 
     Animation walk_left = Animation(player,64);
     walk_left.load_from_file("resources/walk_left.png");
