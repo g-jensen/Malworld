@@ -16,20 +16,24 @@ void Game::init() {
 }
 
 void Game::run() {
-
     sf::Texture texture;
     texture.loadFromFile("resources/zane.png");
-
+    
     // std::vector<Object*> test;
     // for (int i = 0; i < 10000; i++) {
     //     test.push_back(new Object({0,0},{450,50}));
     // }
-
+    
     Player* player = new Player({-200,-150},{50,50});
     player->velocity = {1,0};
     player->init_sprite(texture);
 
-    Object* floor = new Object({-400,100},{800,50});
+    Animation a(player,64);
+    a.load_from_file("resources/testsheet.png");
+    a.play(16);
+    a.do_repeat = true;
+
+    Object* floor = new Object({-300,100},{450,50});
     floor->init_sprite(texture);
 
     Object* floor2 = new Object({-600,50},{450,50});
@@ -81,7 +85,8 @@ void Game::run() {
         }
 
         player->update();
-        
+        a.iterate();
+
         window->clear(sf::Color::Black);
 
         // window->draw(...);
@@ -109,5 +114,8 @@ void Game::run() {
 }
 
 void Game::cleanup() {
+    for (auto a: Animation::animations) {
+        a->free_sprite_vector();
+    }
     delete window;
 }

@@ -14,6 +14,7 @@
 #include "Time.hpp"
 #include "Object.hpp"
 #include "Keybinds.hpp"
+#include "Animation.hpp"
 
 class Game {
 public:
