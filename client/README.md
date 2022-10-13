@@ -2,15 +2,11 @@
 
 ## TODO
 - Basic engine features
-  1. Collision resolution
-  2. ~~Raycasts~~
-  3. Grid system to make raycasts more efficient
-  4. ~~Drawable class~~
-  5. System to determine which Drawables are visible and add them to list
-  6. Sound management (events?)
-  7. Map management (import, creation, and export)
-  8. Animation system
-  9. UI Engine
+  1. System to determine which Drawables are visible and add them to list
+  2. Sound management (events?)
+  3. Map management (import, creation, and export)
+  4. Animation system
+  5. UI Engine
 - Gameplay features
   1. TBD
 

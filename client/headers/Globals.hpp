@@ -1,0 +1,2 @@
+#define MAX_ENT_SPEED 128
+#define MIN_Y_POS -1024
