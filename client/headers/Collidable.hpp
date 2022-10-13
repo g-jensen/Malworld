@@ -6,7 +6,7 @@
 #include "Drawable.hpp"
 #include "Math.hpp"
 
-class Collidable: public Transform, public Drawable {
+class Collidable: public Drawable {
 public:
     static std::vector<Collidable*> collidables;
     // returns distance of first collision from origin. -1 if none after max_depth
