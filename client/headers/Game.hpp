@@ -15,6 +15,9 @@
 #include "Object.hpp"
 #include "Keybinds.hpp"
 #include "Animation.hpp"
+#include "UIBackground.hpp"
+#include "UIGlobals.hpp"
+#include "UIButton.hpp"
 
 class Game {
 public:
@@ -22,6 +25,7 @@ public:
     sf::Event event;
     int max_framerate;
     Game();
+    static void test();
     void init();
     void run();
     void cleanup();

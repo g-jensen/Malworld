@@ -5,6 +5,9 @@ Game::Game() {
 }
 
 void Game::init() {
+
+    UIGlobals::font.loadFromFile("resources/Ubuntu-Regular.ttf");
+
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "Malworld");
     sf::View v = window->getView();
     v.setCenter({0,0});
@@ -15,15 +18,34 @@ void Game::init() {
     max_framerate = 60;
 }
 
+void Game::test() {
+    std::cout << "popop" << std::endl;
+}
+
 void Game::run() {
     sf::Texture texture;
     texture.loadFromFile("resources/zane.png");
-    
+    sf::Texture texture1;
+    texture1.loadFromFile("resources/testsheet.png");
     // std::vector<Object*> test;
     // for (int i = 0; i < 10000; i++) {
     //     test.push_back(new Object({0,0},{450,50}));
     // }
     
+    sf::Sprite sb;
+    sb.setTexture(texture1);
+    // UIBackground b({50,0},{100,100});
+    // b.set_sprite(sb);
+
+    // UIBackground b2({50,50},{50,50});
+    // b2.parent = &b;
+    // b2.set_sprite(sb);
+
+    UIButton b({0,0},{100,100},"greg");
+    b.set_sprite(sb);
+    b.text.set_relative_position({50,50});
+    b.on_click = &Game::test;
+
     Player* player = new Player({-200,-200},{35,50});
 
     Object* floor = new Object({-300,100},{450,50});
@@ -61,6 +83,15 @@ void Game::run() {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
                 player->position.y -= 100;
             }
+            
+            
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                    UIButton::register_button_presses(window);
+                }
+            }
+
+
         }
 
         if (sf::Keyboard::isKeyPressed(Keybinds::move_left)){
@@ -81,6 +112,8 @@ void Game::run() {
 
         player->update();
 
+        b.set_relative_position(b.get_relative_position()+sf::Vector2f{0.1,0});
+
         window->clear(sf::Color::Black);
 
         // window->draw(...);
@@ -88,6 +121,9 @@ void Game::run() {
             d->draw(window);
         }
         window->draw(fps_display);
+        b.draw(window);
+        // b2.draw(window);
+        // b.draw(window);
 
         window->display();
 
