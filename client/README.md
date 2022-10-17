@@ -2,10 +2,9 @@
 
 ## TODO
 - Basic engine features
-  1. System to determine which Drawables are visible and add them to list
+  1. Map management (import, creation, and export)
   2. Sound management (events?)
-  3. Map management (import, creation, and export)
-  4. UI Engine
+  3. System to determine which Drawables are visible and add them to list
 - Gameplay features
   1. NPC Dialogue
 
