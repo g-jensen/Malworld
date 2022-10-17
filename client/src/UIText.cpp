@@ -13,7 +13,10 @@ UIText::UIText(std::string text_string, sf::Vector2f position) {
 }
 
 void UIText::draw(sf::RenderWindow* window) {
+    if (hidden) { return; }
     text.setPosition(get_real_position());
-    window->draw(text);
-    // draw_children(window);
+    if (text.getFont() != nullptr) {
+        window->draw(text);
+    }
+    draw_children(window);
 }

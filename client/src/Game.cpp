@@ -25,25 +25,20 @@ void Game::test() {
 void Game::run() {
     sf::Texture texture;
     texture.loadFromFile("resources/zane.png");
-    sf::Texture texture1;
-    texture1.loadFromFile("resources/testsheet.png");
+
+    sf::Texture button_texture;
+    button_texture.loadFromFile("resources/button.png");
     // std::vector<Object*> test;
     // for (int i = 0; i < 10000; i++) {
     //     test.push_back(new Object({0,0},{450,50}));
     // }
     
     sf::Sprite sb;
-    sb.setTexture(texture1);
-    // UIBackground b({50,0},{100,100});
-    // b.set_sprite(sb);
+    sb.setTexture(button_texture);
 
-    // UIBackground b2({50,50},{50,50});
-    // b2.parent = &b;
-    // b2.set_sprite(sb);
-
-    UIButton b({0,0},{100,100},"greg");
+    UIButton b(window->mapPixelToCoords({0,0}),{100,100},"PRESS ME");
     b.set_sprite(sb);
-    b.text.set_relative_position({50,50});
+    b.text.set_relative_position({0,25});
     b.on_click = &Game::test;
 
     Player* player = new Player({-200,-200},{35,50});
@@ -84,13 +79,11 @@ void Game::run() {
                 player->position.y -= 100;
             }
             
-            
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     UIButton::register_button_presses(window);
                 }
             }
-
 
         }
 
@@ -112,8 +105,6 @@ void Game::run() {
 
         player->update();
 
-        b.set_relative_position(b.get_relative_position()+sf::Vector2f{0.1,0});
-
         window->clear(sf::Color::Black);
 
         // window->draw(...);
@@ -122,8 +113,6 @@ void Game::run() {
         }
         window->draw(fps_display);
         b.draw(window);
-        // b2.draw(window);
-        // b.draw(window);
 
         window->display();
 

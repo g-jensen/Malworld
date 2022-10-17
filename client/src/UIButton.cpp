@@ -12,10 +12,13 @@ UIButton::UIButton(sf::Vector2f relative_position, sf::Vector2f size, std::strin
 }
 
 void UIButton::draw(sf::RenderWindow* window) {
+    if (hidden) { return; }
     sprite.setPosition(get_real_position());
-    window->draw(sprite);
+    if (sprite.getTexture() != nullptr) {
+        window->draw(sprite);
+    }
     text.draw(window);
-    // draw_children(window);
+    draw_children(window);
 }
 
 void UIButton::register_button_presses(sf::RenderWindow* window) {

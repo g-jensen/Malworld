@@ -19,7 +19,10 @@ sf::Sprite UIBackground::get_sprite() {
 }
 
 void UIBackground::draw(sf::RenderWindow* window) {
+    if (hidden) { return; }
     sprite.setPosition(get_real_position());
-    window->draw(sprite);
+    if (sprite.getTexture() != nullptr) {
+        window->draw(sprite);
+    }
     draw_children(window);
 }

@@ -9,6 +9,7 @@ class UIElement {
 public:
     UIElement* parent = nullptr;
     std::vector<UIElement*> children;
+    bool hidden = false;
     
     sf::Vector2f get_relative_position();
     void set_relative_position(sf::Vector2f pos);

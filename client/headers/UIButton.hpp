@@ -13,6 +13,7 @@ public:
     void draw(sf::RenderWindow* window);
     UIText text;
     void (*on_click)(void);
+    
     static std::vector<UIButton*> buttons;
     static void register_button_presses(sf::RenderWindow* window);
 };
