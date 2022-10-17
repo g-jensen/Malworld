@@ -38,7 +38,7 @@ void Game::run() {
 
     UIButton b(window->mapPixelToCoords({0,0}),{100,100},"PRESS ME");
     b.set_sprite(sb);
-    b.text.set_relative_position({0,25});
+    b.text.set_text(UIText::fitTextToSize(b.text.get_text(),{100,100}));
     b.on_click = &Game::test;
 
     Player* player = new Player({-200,-200},{35,50});
@@ -55,12 +55,8 @@ void Game::run() {
     Object* floor4 = new Object({130,50},{450,50});
     floor4->init_sprite(texture);
 
-    sf::Font font;
-    font.loadFromFile("resources/Ubuntu-Regular.ttf");
-    sf::Text fps_display;
-    fps_display.setFont(font);
-    fps_display.setPosition({250,-200});
     int fps = 0;
+    UIText fps_display("FPS: " + std::to_string(fps),window->mapPixelToCoords({10,100}));
 
     // Load keybinds
     std::ifstream f("config/keybinds.json");
@@ -111,13 +107,13 @@ void Game::run() {
         for (Drawable* d: Drawable::drawables) {
             d->draw(window);
         }
-        window->draw(fps_display);
+        fps_display.draw(window);
         b.draw(window);
 
         window->display();
 
         fps = 1 / Time::delta_time.getElapsedTime().asSeconds();
-        fps_display.setString("FPS: " + std::to_string(fps));
+        fps_display.set_string("FPS: " + std::to_string(fps));
 
         Time::cumulative_time += Time::delta_time.getElapsedTime().asSeconds();
         Time::delta_time.restart();
