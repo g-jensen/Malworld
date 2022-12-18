@@ -7,6 +7,7 @@ Game::Game() {
 void Game::init() {
 
     UIGlobals::font.loadFromFile("resources/Ubuntu-Regular.ttf");
+    Drawable::default_texture.loadFromFile("resources/zane.png");
 
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "Malworld");
     sf::View v = window->getView();
@@ -23,15 +24,9 @@ void Game::test() {
 }
 
 void Game::run() {
-    sf::Texture texture;
-    texture.loadFromFile("resources/zane.png");
 
     sf::Texture button_texture;
     button_texture.loadFromFile("resources/button.png");
-    // std::vector<Object*> test;
-    // for (int i = 0; i < 10000; i++) {
-    //     test.push_back(new Object({0,0},{450,50}));
-    // }
     
     sf::Sprite sb;
     sb.setTexture(button_texture);
@@ -43,17 +38,8 @@ void Game::run() {
 
     Player* player = new Player({-200,-200},{35,50});
 
-    Object* floor = new Object({-300,100},{450,50});
-    floor->init_sprite(texture);
-
-    Object* floor2 = new Object({-600,50},{450,50});
-    floor2->init_sprite(texture);
-
-    Object* floor3 = new Object({-300,-100},{450,50});
-    floor3->init_sprite(texture);
-
-    Object* floor4 = new Object({130,50},{450,50});
-    floor4->init_sprite(texture);
+    std::ifstream file("resources/maps/output.json");
+    MapLoader::loadMapFromFile(file);
 
     int fps = 0;
     UIText fps_display("FPS: " + std::to_string(fps),window->mapPixelToCoords({10,100}));
@@ -120,13 +106,10 @@ void Game::run() {
     }
 
     delete player;
-    delete floor;
-    delete floor2;
-    delete floor3;
-    delete floor4;
-    // for (auto g: test) {
-    //     delete g;
-    // }
+    
+    for (auto o: MapLoader::objects) {
+        delete o;
+    }
 }
 
 void Game::cleanup() {

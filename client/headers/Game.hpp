@@ -18,6 +18,7 @@
 #include "UIBackground.hpp"
 #include "UIGlobals.hpp"
 #include "UIButton.hpp"
+#include "MapLoader.hpp"
 
 class Game {
 public:

@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 #include "Transform.hpp"
 
@@ -19,6 +20,7 @@ public:
         sprite.setPosition(position);
     }
     static std::vector<Drawable*> drawables;
+    static sf::Texture default_texture;
 protected:
     sf::Sprite sprite;
 };

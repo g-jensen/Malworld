@@ -139,11 +139,11 @@ void Game::run() {
 
                 float resize_sensitivity = 1.0f;
                 if (event.key.code == sf::Keyboard::Up) {
-                    if (selected_rect != nullptr) {
+                    if (selected_rect != nullptr && selected_rect->getSize().y > resize_sensitivity) {
                         selected_rect->setSize(selected_rect->getSize() + sf::Vector2f{0,-resize_sensitivity});
                     }
                 }
-                if (event.key.code == sf::Keyboard::Left) {
+                if (event.key.code == sf::Keyboard::Left && selected_rect->getSize().x > resize_sensitivity) {
                     if (selected_rect != nullptr) {
                         selected_rect->setSize(selected_rect->getSize() + sf::Vector2f{-resize_sensitivity,0});
                     }
@@ -227,13 +227,15 @@ void Game::run() {
 
                 if (is_creating_box) {
                     if (current_rect != nullptr) {
-                        current_rect->setPosition(window->mapPixelToCoords(saved_mouse_pos));
-                        current_rect->setSize((sf::Vector2f)(sf::Mouse::getPosition(*window) - saved_mouse_pos));
+                        sf::Vector2f pos = window->mapPixelToCoords(saved_mouse_pos);
+                        sf::Vector2f size = (sf::Vector2f)(sf::Mouse::getPosition(*window) - saved_mouse_pos);
+                        
+                        if (size.x < 0) { pos.x += size.x; size.x = -size.x; }
+                        if (size.y < 0) { pos.y += size.y; size.y = -size.y; }
+                        
+                        current_rect->setPosition(pos);
+                        current_rect->setSize(size);
                     }
-                }
-
-                if (is_selecting) {
-
                 }
 
                 mouse_label.set_relative_position(window->mapPixelToCoords(sf::Mouse::getPosition(*window)) + sf::Vector2f{10,0});
@@ -250,11 +252,6 @@ void Game::run() {
             }
 
         }
-
-        // if (selected_rect != nullptr) {
-        //     selected_rect->setOutlineColor(sf::Color::Green);
-        //     selected_rect->setOutlineThickness(3);
-        // }
 
         x_axis.setPosition({window->getView().getCenter().x-400,0});
         y_axis.setPosition({0,window->getView().getCenter().y-300});

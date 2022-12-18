@@ -3,6 +3,7 @@
 Object::Object(sf::Vector2f position, sf::Vector2f size) {
     this->position = position;
     setup_hitbox(position,size);
+    init_sprite(Drawable::default_texture);
 }
 
 void Object::init_sprite(sf::Texture& texture) {
