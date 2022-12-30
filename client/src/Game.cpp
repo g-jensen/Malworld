@@ -37,6 +37,7 @@ void Game::run() {
     b.on_click = &Game::test;
 
     Player* player = new Player({-200,-200},{35,50});
+    NPC* npc = new NPC("duck",{100,52},{45,48});
 
     std::ifstream file("resources/maps/output.json");
     MapLoader::loadMapFromFile(file);
@@ -85,7 +86,11 @@ void Game::run() {
             }
         }
 
-        player->update();
+        for (Entity* e : Entity::entities) {
+            if (e != nullptr) {
+                e->update();
+            }
+        }
 
         window->clear(sf::Color::Black);
 
@@ -106,6 +111,7 @@ void Game::run() {
     }
 
     delete player;
+    delete npc;
     
     for (auto o: MapLoader::objects) {
         delete o;

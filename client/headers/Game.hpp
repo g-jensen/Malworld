@@ -19,6 +19,7 @@
 #include "UIGlobals.hpp"
 #include "UIButton.hpp"
 #include "MapLoader.hpp"
+#include "NPC.hpp"
 
 class Game {
 public:
