@@ -8,13 +8,6 @@
 - Gameplay features
   1. NPC Dialogue
 
-## Links
-[UML Tree Link](https://lucid.app/lucidchart/a2a08f0b-dfa6-4641-a8cc-3fd7d605779a/edit?viewport_loc=-332%2C-309%2C3678%2C1806%2C0_0&invitationId=inv_33b1dea5-221b-4891-8058-8ce4be728af2#)
-
-[Taiga Link](https://tree.taiga.io/project/lackability-malworld-1/kanban)
-
-[Raycasting Link](https://lodev.org/cgtutor/raycasting.html#The_Basic_Idea_)
-
 ## Merging Guidelines
 - Create new branch with your edit and make a pull request
 
