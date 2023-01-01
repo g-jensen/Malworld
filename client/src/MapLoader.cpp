@@ -8,9 +8,11 @@ void MapLoader::loadMapFromFile(std::ifstream& file) {
     json data = json::parse(file);
 
     for (size_t i = 0; i < data["objects"].size(); i++) {
-        objects.push_back(new Object(
+        Object* obj = new Object(
             {data["objects"][i]["position"][0],data["objects"][i]["position"][1]},
             {data["objects"][i]["size"][0],data["objects"][i]["size"][1]}
-        ));
+        );
+        obj->do_collision = true;
+        objects.push_back(obj);
     }
 }

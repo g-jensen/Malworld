@@ -20,6 +20,9 @@
 #include "UIButton.hpp"
 #include "MapLoader.hpp"
 #include "NPC.hpp"
+#include "DialoguePromptNode.hpp"
+#include "DialogueResponseNode.hpp"
+#include "DialogueSystem.hpp"
 
 class Game {
 public:

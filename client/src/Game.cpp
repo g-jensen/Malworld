@@ -37,7 +37,23 @@ void Game::run() {
     b.on_click = &Game::test;
 
     Player* player = new Player({-200,-200},{35,50});
-    NPC* npc = new NPC("duck",{100,52},{45,48});
+
+    NPC* npc = new NPC("duck",{100,52},{43,48});
+    npc->do_collision = false;
+
+
+    DialoguePromptNode* root = new DialoguePromptNode("Quack! I'm a duck!");
+    root->options.push_back(new DialogueResponseNode("I can see that"));
+    root->options.push_back(new DialogueResponseNode("Me too"));
+    root->options.push_back(new DialogueResponseNode("I love Werthers"));
+    root->options[1]->prompt = new DialoguePromptNode("No you're not!");
+    root->options[1]->prompt->options.push_back(new DialogueResponseNode("Poop"));
+    root->options[1]->prompt->options.push_back(new DialogueResponseNode("Let's Go!"));
+
+    DialogueSystem* d_system = new DialogueSystem(root);
+    d_system->print_system();
+    d_system->choose_response(1);
+    d_system->print_system();
 
     std::ifstream file("resources/maps/output.json");
     MapLoader::loadMapFromFile(file);
@@ -112,7 +128,10 @@ void Game::run() {
 
     delete player;
     delete npc;
+    delete d_system;
     
+    root->free_node(); 
+
     for (auto o: MapLoader::objects) {
         delete o;
     }
