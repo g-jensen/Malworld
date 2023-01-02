@@ -102,6 +102,12 @@ void Game::run() {
                         }
                     }
                 }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                    delete Globals::dialogue_system;
+                    Globals::dialogue_system = nullptr;
+                    Globals::npc_prompt.set_string("");
+                    Globals::npc_options.set_string("");
+                }
             }
 
         }
