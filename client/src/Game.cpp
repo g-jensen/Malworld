@@ -2,7 +2,6 @@
 
 Game::Game() {
     window = nullptr;
-    Globals::dialogue_system = nullptr;
 }
 
 void Game::init() {
@@ -56,9 +55,9 @@ void Game::run() {
     int fps = 0;
     UIText fps_display("FPS: " + std::to_string(fps),window->mapPixelToCoords({10,100}));
 
-    Globals::npc_prompt = UIText("",window->mapPixelToCoords({400,100}));
-    Globals::npc_options = UIText("",window->mapPixelToCoords({400,150}));
-    Globals::textbox = UIText("",window->mapPixelToCoords({0,0}));
+    npc_prompt = UIText("",window->mapPixelToCoords({400,100}));
+    npc_options = UIText("",window->mapPixelToCoords({400,150}));
+    player_text = UIText("",window->mapPixelToCoords({0,0}));
 
     // Load keybinds
     std::ifstream f("config/keybinds.json");
@@ -82,31 +81,35 @@ void Game::run() {
                     UIButton::register_button_presses(window);
                 }
             }
-
+ 
             if (event.type == sf::Event::KeyPressed) {
-                if (Globals::dialogue_system != nullptr) {
+                if (dialogue_system != nullptr) {
                     for (size_t i = 1; i < Keybinds::numbers.size(); i++) {
                         if (sf::Keyboard::isKeyPressed(Keybinds::numbers[i])) {
-                            Globals::textbox.set_string(Globals::dialogue_system->get_response(i-1));
-                            Globals::dialogue_system->choose_response(i-1);
-                            Globals::npc_prompt.set_string(Globals::dialogue_system->get_prompt());
-                            Globals::npc_options.set_string(Globals::dialogue_system->get_options());
-                            if (Globals::dialogue_system->get_options() == "") {
-                                TimedEvent* e = new TimedEvent(sf::seconds(3),[](){Globals::textbox.set_string("");});
+                            player_text.set_string(dialogue_system->get_response(i-1));
+                            dialogue_system->choose_response(i-1);
+                            npc_prompt.set_string(dialogue_system->get_prompt());
+                            npc_options.set_string(dialogue_system->get_options());
+                            if (dialogue_system->get_options() == "") {
+                                if (clear_player_text == nullptr) {
+                                    clear_player_text = new TimedEvent(sf::seconds(2),[](){player_text.set_string("");});
+                                } else {
+                                    clear_player_text->start_time = Time::cumulative_time.getElapsedTime();
+                                }
                             }
-                            if (Globals::dialogue_system->get_prompt() == "") {
-                                delete Globals::dialogue_system;
-                                Globals::dialogue_system = nullptr;
+                            if (dialogue_system->get_prompt() == "") {
+                                delete dialogue_system;
+                                dialogue_system = nullptr;
                             }
                             break;
                         }
                     }
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                    delete Globals::dialogue_system;
-                    Globals::dialogue_system = nullptr;
-                    Globals::npc_prompt.set_string("");
-                    Globals::npc_options.set_string("");
+                    delete dialogue_system;
+                    dialogue_system = nullptr;
+                    npc_prompt.set_string("");
+                    npc_options.set_string("");
                 }
             }
 
@@ -129,13 +132,13 @@ void Game::run() {
         }
 
         if (player->hit_box.intersects(npc->hit_box)) {
-            if (Globals::dialogue_system == nullptr) {
-                Globals::dialogue_system = new DialogueSystem(root);
-                Globals::npc_prompt.set_string(Globals::dialogue_system->get_prompt());
-                Globals::npc_options.set_string(Globals::dialogue_system->get_options());
+            if (dialogue_system == nullptr) {
+                dialogue_system = new DialogueSystem(root);
+                npc_prompt.set_string(dialogue_system->get_prompt());
+                npc_options.set_string(dialogue_system->get_options());
             }
         }
-        Globals::textbox.set_relative_position(player->position - sf::Vector2f{0, Globals::textbox.get_text().getLocalBounds().height + 20});
+        player_text.set_relative_position(player->position - sf::Vector2f{0, player_text.get_text().getLocalBounds().height + 20});
 
         for (Entity* e : Entity::entities) {
             if (e != nullptr) {
@@ -150,9 +153,9 @@ void Game::run() {
             d->draw(window);
         }
         fps_display.draw(window);
-        Globals::npc_prompt.draw(window);
-        Globals::npc_options.draw(window);
-        Globals::textbox.draw(window);
+        npc_prompt.draw(window);
+        npc_options.draw(window);
+        player_text.draw(window);
         b.draw(window);
 
         window->display();
@@ -167,7 +170,7 @@ void Game::run() {
 
     delete player;
     delete npc;
-    delete Globals::dialogue_system;
+    delete dialogue_system;
     
     root->free_node(); 
 

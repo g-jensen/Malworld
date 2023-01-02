@@ -7,6 +7,7 @@
 #include "Globals.hpp"
 #include "Animation.hpp"
 
+
 class Entity: public Collidable {
 public:
     static std::vector<Entity*> entities;
