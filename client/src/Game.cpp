@@ -2,6 +2,7 @@
 
 Game::Game() {
     window = nullptr;
+    Globals::dialogue_system = nullptr;
 }
 
 void Game::init() {
@@ -41,7 +42,6 @@ void Game::run() {
     NPC* npc = new NPC("duck",{100,52},{43,48});
     npc->do_collision = false;
 
-
     DialoguePromptNode* root = new DialoguePromptNode("Quack! I'm a duck!");
     root->options.push_back(new DialogueResponseNode("I can see that"));
     root->options.push_back(new DialogueResponseNode("Me too"));
@@ -50,16 +50,15 @@ void Game::run() {
     root->options[1]->prompt->options.push_back(new DialogueResponseNode("Poop"));
     root->options[1]->prompt->options.push_back(new DialogueResponseNode("Let's Go!"));
 
-    DialogueSystem* d_system = new DialogueSystem(root);
-    d_system->print_system();
-    d_system->choose_response(1);
-    d_system->print_system();
-
     std::ifstream file("resources/maps/output.json");
     MapLoader::loadMapFromFile(file);
 
     int fps = 0;
     UIText fps_display("FPS: " + std::to_string(fps),window->mapPixelToCoords({10,100}));
+
+    Globals::npc_prompt = UIText("",window->mapPixelToCoords({400,100}));
+    Globals::npc_options = UIText("",window->mapPixelToCoords({400,150}));
+    Globals::textbox = UIText("",window->mapPixelToCoords({0,0}));
 
     // Load keybinds
     std::ifstream f("config/keybinds.json");
@@ -84,6 +83,27 @@ void Game::run() {
                 }
             }
 
+            if (event.type == sf::Event::KeyPressed) {
+                if (Globals::dialogue_system != nullptr) {
+                    for (size_t i = 1; i < Keybinds::numbers.size(); i++) {
+                        if (sf::Keyboard::isKeyPressed(Keybinds::numbers[i])) {
+                            Globals::textbox.set_string(Globals::dialogue_system->get_response(i-1));
+                            Globals::dialogue_system->choose_response(i-1);
+                            Globals::npc_prompt.set_string(Globals::dialogue_system->get_prompt());
+                            Globals::npc_options.set_string(Globals::dialogue_system->get_options());
+                            if (Globals::dialogue_system->get_options() == "") {
+                                TimedEvent* e = new TimedEvent(sf::seconds(3),[](){Globals::textbox.set_string("");});
+                            }
+                            if (Globals::dialogue_system->get_prompt() == "") {
+                                delete Globals::dialogue_system;
+                                Globals::dialogue_system = nullptr;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
         }
 
         if (sf::Keyboard::isKeyPressed(Keybinds::move_left)){
@@ -102,6 +122,15 @@ void Game::run() {
             }
         }
 
+        if (player->hit_box.intersects(npc->hit_box)) {
+            if (Globals::dialogue_system == nullptr) {
+                Globals::dialogue_system = new DialogueSystem(root);
+                Globals::npc_prompt.set_string(Globals::dialogue_system->get_prompt());
+                Globals::npc_options.set_string(Globals::dialogue_system->get_options());
+            }
+        }
+        Globals::textbox.set_relative_position(player->position - sf::Vector2f{0, Globals::textbox.get_text().getLocalBounds().height + 20});
+
         for (Entity* e : Entity::entities) {
             if (e != nullptr) {
                 e->update();
@@ -115,6 +144,9 @@ void Game::run() {
             d->draw(window);
         }
         fps_display.draw(window);
+        Globals::npc_prompt.draw(window);
+        Globals::npc_options.draw(window);
+        Globals::textbox.draw(window);
         b.draw(window);
 
         window->display();
@@ -122,18 +154,22 @@ void Game::run() {
         fps = 1 / Time::delta_time.getElapsedTime().asSeconds();
         fps_display.set_string("FPS: " + std::to_string(fps));
 
-        Time::cumulative_time += Time::delta_time.getElapsedTime().asSeconds();
+        //Time::cumulative_time += Time::delta_time.getElapsedTime().asSeconds();
         Time::delta_time.restart();
+        TimedEvent::update_events();
     }
 
     delete player;
     delete npc;
-    delete d_system;
+    delete Globals::dialogue_system;
     
     root->free_node(); 
 
     for (auto o: MapLoader::objects) {
         delete o;
+    }
+    for (auto e: TimedEvent::timed_events) {
+        delete e;
     }
 }
 

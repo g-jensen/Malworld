@@ -1,23 +1,23 @@
 {
     "objects": [
         {
-            "position": [-377,100],
-            "size": [760,62],
+            "position": [-389,118],
+            "size": [773,59],
             "texture_id": 0
         },
         {
-            "position": [281,48],
-            "size": [60,52],
+            "position": [-29,83],
+            "size": [30,30],
             "texture_id": 0
         },
         {
-            "position": [314,-5],
-            "size": [51,54],
+            "position": [52,48],
+            "size": [41,33],
             "texture_id": 0
         },
         {
-            "position": [-311,60],
-            "size": [78,40],
+            "position": [101,13],
+            "size": [35,30],
             "texture_id": 0
         }
     ]

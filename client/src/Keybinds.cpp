@@ -62,6 +62,19 @@ const std::unordered_map<std::string, sf::Keyboard::Key> Keybinds::string_to_key
     {"NUMPAD_9", sf::Keyboard::Numpad9},
 };
 
+const std::vector<sf::Keyboard::Key> Keybinds::numbers = {
+    sf::Keyboard::Num0, 
+    sf::Keyboard::Num1,
+    sf::Keyboard::Num2, 
+    sf::Keyboard::Num3, 
+    sf::Keyboard::Num4, 
+    sf::Keyboard::Num5, 
+    sf::Keyboard::Num6, 
+    sf::Keyboard::Num7, 
+    sf::Keyboard::Num8, 
+    sf::Keyboard::Num9
+};
+
 void Keybinds::load_keybinds(json data){
     auto key = Keybinds::string_to_key.find(data["move_left"]);
     if (key != Keybinds::string_to_key.end()) {

@@ -10,8 +10,10 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include "Globals.hpp"
 #include "Player.hpp"
 #include "Time.hpp"
+#include "TimedEvent.hpp"
 #include "Object.hpp"
 #include "Keybinds.hpp"
 #include "Animation.hpp"

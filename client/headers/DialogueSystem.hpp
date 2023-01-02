@@ -12,8 +12,9 @@ public:
     DialogueSystem(DialoguePromptNode* prompt);
     void set_prompt(DialoguePromptNode* prompt);
     std::string get_prompt();
-    std::vector<std::string> get_options();
+    std::string get_options();
     void choose_response(size_t index);
+    std::string get_response(size_t index);
     void print_system();
 private:
     void fill_options();
